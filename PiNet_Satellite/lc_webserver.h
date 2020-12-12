@@ -25,9 +25,11 @@ void InitWebserver()
   server.on("/", []() {
     String str = FrontMatter();
     str += ButtonMatter("/info", "Information");
-    str += ButtonMatter("/configure", "Configuration");
+    str += ButtonMatter("/config", "Configuration");
     str += ButtonMatter("/upgrade", "Upgrade");
-    server.send(200, "text/html", FrontMatter() + HeadMatter() + ButtonMatter("/info", "Information") + BackMatter());
+    str += BackMatter();
+    
+    server.send(200, "text/html", str);
   });
   server.on("/info", []() {
     String str = FrontMatter() + HeadMatter();
