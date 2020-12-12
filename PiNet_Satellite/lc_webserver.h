@@ -23,7 +23,7 @@ ESP8266WebServer server(80);
 void InitWebserver()
 {
   server.on("/", []() {
-    String str = FrontMatter();
+    String str = FrontMatter() + HeadMatter();
     str += ButtonMatter("/info", "Information");
     str += ButtonMatter("/config", "Configuration");
     str += ButtonMatter("/upgrade", "Upgrade");
@@ -45,6 +45,7 @@ void InitWebserver()
     int hrs = int((mils/(1000*60*60)) % 24);
     int dys = int((mils/(1000*60*60*24)) % 365);
     str += InfoRow("Uptime", String(dys) + "d " + hrs + "h " + mins + "m");
+    str += InfoRow("Last reset reason", ESP.getResetReason());
     
     str += InfoHeader("Chip Info");
     str += InfoRow("Chip ID", "0x" + String(ESP.getChipId(), HEX));
@@ -52,6 +53,7 @@ void InitWebserver()
     str += InfoRow("Flash size", String(ESP.getFlashChipSize()/1024) + "kB");
     str += InfoRow("Program size", String(ESP.getSketchSize()/1024) + "kB");
     str += InfoRow("Free space", String(ESP.getFreeSketchSpace()/1024) + "kB");
+    str += InfoRow("Free memory", String(ESP.getFreeHeap()/1024) + "kB");
     //str += InfoRow("Flash writes", "");
     //str += InfoRow("Boot count", "");
 
@@ -59,6 +61,9 @@ void InitWebserver()
     str += InfoRow("SSID", WiFi.SSID());
     str += InfoRow("Network IP", WiFi.localIP().toString());
     str += InfoRow("MAC-address", WiFi.macAddress());
+    str += InfoRow("Gateway", WiFi.gatewayIP().toString());
+    str += InfoRow("DNS Server", WiFi.dnsIP().toString());
+    str += InfoRow("Subnet Mask", WiFi.subnetMask().toString());
     
     str += InfoHeader("SSDP Discovery");
     str += InfoRow("Schema URL", SSDP_URL + SSDP_SCHEMA_URL);
