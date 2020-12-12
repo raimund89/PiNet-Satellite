@@ -14,7 +14,7 @@ ESP8266WebServer server(80);
 void InitWebserver()
 {
   server.on("/", []() {
-    server.send(200, "text/html", FrontMatter() + HeadMatter() + BackMatter());
+    server.send(200, "text/html", FrontMatter() + HeadMatter() + ButtonMatter("/description.xml", "SSDP Info") + BackMatter());
     // User wants some device info:
     /*DynamicJsonDocument doc(200);
     doc["ip"] = WiFi.localIP().toString();

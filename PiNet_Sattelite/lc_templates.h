@@ -6,26 +6,28 @@ String FrontMatter() {
          "<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
          "<link rel=\"icon\" href=\"data:,\">"
          "<style>"
-         "html { background-color: #252525; color: #eaeaea; font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}"
-         ".button { background-color: #195B6A; border: none; color: white; padding: 16px 40px; text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}"
-         ".button2 {background-color: #77878A;}"
+         "html { background-color:#252525; color:#eaeaea; font-family:Helvetica; margin:0px auto; text-align:center;}"
+         ".button1 { background-color:#32a852; color:#eaeaea; border:none; border-radius:5px; padding:10px 0px; width:100%; font-size:16px; margin-bottom:2px; cursor:pointer;}"
+         ".button2 { background-color:#a83232; color:#eaeaea; border:none; border-radius:5px; padding:10px 0px; width:100%; font-size:16px; margin-bottom:2px; cursor:pointer;}"
+         ".button3 { background-color:#5e7364;}"
          "</style>"
          "</head><body>"
-         "<div style='min-width:350px;'>";
+         "<div style='display:inline-block; text-align:center; max-width:350px;'>";
 }
 
 String HeadMatter() {
-  return "<h2>PiNet Sattelite</h2>"
-         "Christmas Fractal Lamp";
+  return "<h2>PiNet Satellite</h2>"
+         "<h1>Christmas Fractal Lamp</h1>";
 }
 
-String ButtonMatter() {
-  
+String ButtonMatter(String url, String text) {
+  return "<p><a href=\"" + url +  "\"><button class=\"button1\">" + text + "</button></a></p>";
 }
 
 String BackMatter() {
-  return "<hr/>"
-         "<span style='align:right;'>PiNet 0.1 by raimund89</div>"
+  return "<p><button class=\"button2\" onclick=\"if(confirm('Are you sure you want to restart?')){window.location.assign('/restart')};\">Restart</button></p>"
+         "<hr/>"
+         "<div style='width:100%; font-size:10pt; text-align:right;'>PiNet 0.1 by raimund89</div>"
          "</div></body></html>";
 }
 
