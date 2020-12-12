@@ -9,7 +9,7 @@
 void InitOTA()
 {
   ArduinoOTA.setPort(8266);
-  ArduinoOTA.setHostname("PiNet Sattelite");
+  ArduinoOTA.setHostname("PiNet Satellite");
 
   ArduinoOTA.onStart([]() {
   });

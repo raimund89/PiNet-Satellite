@@ -14,7 +14,7 @@ void InitWifi()
   wifiManager.setAPCallback(configModeCallback);
   
   // Put some safeties around this (if(!autoconnect), do something)
-  wifiManager.autoConnect("PiNet Sattelite");
+  wifiManager.autoConnect("PiNet Satellite");
 }
 
 void configModeCallback(WiFiManager *manager) {

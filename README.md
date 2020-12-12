@@ -1,4 +1,4 @@
-# PiNet-Sattelite
+# PiNet-Satellite
 This repository contains the firmware to make any ESP8266 (or ESP8285) based device part of the PiNet local network. The firmware is only meant for devices that need active control, such as switches and lights. For sensors there will be another project in the future.
 
 # Installation
