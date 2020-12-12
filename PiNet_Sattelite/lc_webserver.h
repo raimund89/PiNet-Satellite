@@ -14,6 +14,17 @@ ESP8266WebServer server(80);
 void InitWebserver()
 {
   server.on("/", []() {
+    server.send(200, "text/html", FrontMatter() + HeadMatter() + BackMatter());
+    // User wants some device info:
+    /*DynamicJsonDocument doc(200);
+    doc["ip"] = WiFi.localIP().toString();
+    doc["mac"] = WiFi.macAddress();
+    doc["hostname"] = WiFi.hostname();
+    doc["wifistatus"] = WiFi.status();
+    String output;
+    serializeJson(doc, output);
+    
+    server.send(200, "text/json", output);*/
   });
   server.on("/cm", []() {
     if(server.hasArg("cmnd")) {
