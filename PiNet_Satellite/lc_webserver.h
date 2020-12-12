@@ -23,6 +23,10 @@ ESP8266WebServer server(80);
 void InitWebserver()
 {
   server.on("/", []() {
+    String str = FrontMatter();
+    str += ButtonMatter("/info", "Information");
+    str += ButtonMatter("/configure", "Configuration");
+    str += ButtonMatter("/upgrade", "Upgrade");
     server.send(200, "text/html", FrontMatter() + HeadMatter() + ButtonMatter("/info", "Information") + BackMatter());
   });
   server.on("/info", []() {
@@ -33,20 +37,21 @@ void InitWebserver()
     str += InfoRow("Device Type", "RGB");
     str += InfoRow("Friendly Name", "Fractal Lamp");
     str += InfoRow("PiNet version", "0.1");
-
-    str += InfoHeader("Chip Info");
+  
     long mils = millis();
     int mins = int((mils/(1000*60)) % 60);
     int hrs = int((mils/(1000*60*60)) % 24);
     int dys = int((mils/(1000*60*60*24)) % 365);
     str += InfoRow("Uptime", String(dys) + "d " + hrs + "h " + mins + "m");
+    
+    str += InfoHeader("Chip Info");
+    str += InfoRow("Chip ID", "0x" + String(ESP.getChipId(), HEX));
+    str += InfoRow("Flash Chip ID", "0x" + String(ESP.getFlashChipId(), HEX));
+    str += InfoRow("Flash size", String(ESP.getFlashChipSize()/1024) + "kB");
+    str += InfoRow("Program size", String(ESP.getSketchSize()/1024) + "kB");
+    str += InfoRow("Free space", String(ESP.getFreeSketchSpace()/1024) + "kB");
     //str += InfoRow("Flash writes", "");
     //str += InfoRow("Boot count", "");
-    // Flash size
-    // Program size
-    // Free program space
-    // Free memory
-    
 
     str += InfoHeader("WiFi Info");
     str += InfoRow("SSID", WiFi.SSID());
@@ -61,6 +66,8 @@ void InitWebserver()
     str += InfoRow("Manufacturer", SSDP_MANUFACTURER);
     str += InfoRow("Model Name", SSDP_MODEL_NAME);
     str += InfoRow("Model Number", SSDP_MODEL_NUMBER);
+
+    str += ButtonMatter("/", "Back");
     
     str += BackMatter();
 
