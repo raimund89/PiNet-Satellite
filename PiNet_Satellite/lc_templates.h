@@ -24,6 +24,14 @@ String ButtonMatter(String url, String text) {
   return "<p><a href=\"" + url +  "\"><button class=\"button1\">" + text + "</button></a></p>";
 }
 
+String InfoHeader(String head) {
+  return "<h3>" + head + "</h3>";
+}
+
+String InfoRow(String key, String value) {
+  return "<p style='width:100%;'><div style='width:50%;display:inline-block;text-align:left;'>" + key + "</div><div style='width:50%;display:inline-block;text-align:left;'>" + value + "</div></p>";
+}
+
 String BackMatter() {
   return "<p><button class=\"button2\" onclick=\"if(confirm('Are you sure you want to restart?')){window.location.assign('/restart')};\">Restart</button></p>"
          "<hr/>"
