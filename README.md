@@ -18,3 +18,7 @@ The current software is really just an early setup to make the device work. A lo
 
 # Known issues
 - Device still shows up as softAP named AI-THINKER_XXXXXX (last 6 digits of MAC-address)
+- No secure connection (ssl, password)
+- No state persistence after power cycle or restart
+- Lots of static names
+- No ability to reset WiFi settings
