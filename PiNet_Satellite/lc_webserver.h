@@ -35,7 +35,7 @@ void InitWebserver()
     String str = FrontMatter() + HeadMatter();
     
     str += InfoHeader("General");
-    str += InfoRow("Manufacturer", "Espressiff");
+    str += InfoRow("Manufacturer", "Espressif");
     str += InfoRow("Device Type", "RGB");
     str += InfoRow("Friendly Name", "Fractal Lamp");
     str += InfoRow("PiNet version", "0.1");
