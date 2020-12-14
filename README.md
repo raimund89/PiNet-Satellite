@@ -15,3 +15,6 @@ The current software is really just an early setup to make the device work. A lo
 - [ ] Configuration as different device types: switch, light, rgb (3x led), programmable led-strip, etc.
 - [ ] Pin naming
 - [ ] Pin modes (analog, digital)
+
+# Known issues
+- Device still shows up as softAP named AI-THINKER_XXXXXX (last 6 digits of MAC-address)
