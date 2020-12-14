@@ -83,18 +83,39 @@ void InitWebserver()
   server.on("/config", []() {
     String str = FrontMatter() + HeadMatter();
 
-    str += ButtonMatter("/config?o=wifi", "WiFi");
-    str += ButtonMatter("/config?o=ssdp", "SSDP");
-    str += ButtonMatter("/config?o=dev", "Device");
-    str += ButtonMatter("/config?o=timers", "Timers");
+    if(server.hasArg("o")) {
+      String page = server.arg("o");
 
-    str += ButtonMatter("/", "Back");
+      if(page == "wifi"){
+        str += "Wifi Settings";
+      }
+      else if(page == "ssdp") {
+        str += "SSDP Settings";
+      }
+      else if(page == "dev") {
+        str += "Device Settings";
+      }
+      else if(page == "timers") {
+        str += "Timer Settings";
+      }
+      
+      str += ButtonMatter("/config", "Back");
+    }
+    else {
+      str += ButtonMatter("/config?o=wifi", "WiFi");
+      str += ButtonMatter("/config?o=ssdp", "SSDP");
+      str += ButtonMatter("/config?o=dev", "Device");
+      str += ButtonMatter("/config?o=timers", "Timers");
+      str += ButtonMatter("/", "Back");
+    }
 
     str += BackMatter();
 
     server.send(200, "text/html", str);
   });
   server.on("/restart", []() {
+    server.sendHeader("Location", String("/"), true);
+    server.send(302, "text/plain", "");
     ESP.restart();
   });
   server.on("/cm", []() {
