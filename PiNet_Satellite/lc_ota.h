@@ -5,11 +5,12 @@
 #include <ESP8266mDNS.h>
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
+#include "lc_settings.h"
 
 void InitOTA()
 {
   ArduinoOTA.setPort(8266);
-  ArduinoOTA.setHostname("PiNet Satellite");
+  ArduinoOTA.setHostname(conf.friendly_name);
 
   ArduinoOTA.onStart([]() {
   });

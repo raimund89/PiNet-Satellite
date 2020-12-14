@@ -8,11 +8,10 @@
 
 #include "lc_gpio.h"
 #include "lc_templates.h"
+#include "lc_settings.h"
 
 #define SSDP_URL String("/")
 #define SSDP_SCHEMA_URL "description.xml"
-#define SSDP_HTTP_PORT 80
-#define SSDP_NAME "PiNet Sattelite"
 #define SSDP_SERIAL_NUMBER ESP.getChipId()
 #define SSDP_MODEL_NAME "RGB"
 #define SSDP_MODEL_NUMBER "01"
@@ -37,7 +36,7 @@ void InitWebserver()
     str += InfoHeader("General");
     str += InfoRow("Manufacturer", "Espressif");
     str += InfoRow("Device Type", "RGB");
-    str += InfoRow("Friendly Name", "Fractal Lamp");
+    str += InfoRow("Friendly Name", conf.friendly_name);
     str += InfoRow("PiNet version", "0.1");
   
     long mils = millis();
@@ -67,8 +66,8 @@ void InitWebserver()
     
     str += InfoHeader("SSDP Discovery");
     str += InfoRow("Schema URL", SSDP_URL + SSDP_SCHEMA_URL);
-    str += InfoRow("Port", String(SSDP_HTTP_PORT));
-    str += InfoRow("Name", SSDP_NAME);
+    str += InfoRow("Port", String(conf.port));
+    str += InfoRow("Name", conf.friendly_name);
     str += InfoRow("Serial Number", String(SSDP_SERIAL_NUMBER));
     str += InfoRow("Manufacturer", SSDP_MANUFACTURER);
     str += InfoRow("Model Name", SSDP_MODEL_NAME);
@@ -162,8 +161,8 @@ void InitWebserver()
   server.begin();
 
   SSDP.setSchemaURL(SSDP_URL + SSDP_SCHEMA_URL);
-  SSDP.setHTTPPort(SSDP_HTTP_PORT);
-  SSDP.setName(SSDP_NAME);
+  SSDP.setHTTPPort(conf.port);
+  SSDP.setName(conf.friendly_name);
   SSDP.setSerialNumber(SSDP_SERIAL_NUMBER);
   SSDP.setURL(SSDP_URL);
   SSDP.setModelName(SSDP_MODEL_NAME);

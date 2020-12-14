@@ -1,6 +1,8 @@
 #ifndef LC_TEMPLATES
 #define LC_TEMPLATES
 
+#include "lc_settings.h"
+
 String FrontMatter() {
   return "<!DOCTYPE html><html>"
          "<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
@@ -16,8 +18,7 @@ String FrontMatter() {
 }
 
 String HeadMatter() {
-  return "<h2>PiNet Satellite</h2>"
-         "<h1>Christmas Fractal Lamp</h1>";
+  return String("<h2>PiNet Satellite</h2>") + "<h1>" + conf.friendly_name + "</h1>";
 }
 
 String ButtonMatter(String url, String text) {

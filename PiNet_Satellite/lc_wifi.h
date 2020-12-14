@@ -2,6 +2,7 @@
 #define LC_WIFI
 
 #include <WiFiManager.h>
+#include "lc_settings.h"
 
 WiFiManager wifiManager;
 
@@ -14,7 +15,7 @@ void InitWifi()
   wifiManager.setAPCallback(configModeCallback);
   
   // Put some safeties around this (if(!autoconnect), do something)
-  wifiManager.autoConnect("PiNet Satellite");
+  wifiManager.autoConnect(conf.ap_name);
 }
 
 void configModeCallback(WiFiManager *manager) {
