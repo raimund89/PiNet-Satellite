@@ -14,6 +14,7 @@ void setup() {
   InitOTA();
   delay(1000);
   InitWebserver();
+  InitSSDP();
 }
 
 void loop() {

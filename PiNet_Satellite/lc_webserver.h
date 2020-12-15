@@ -1,21 +1,12 @@
 #ifndef LC_WEBSERVER
 #define LC_WEBSERVER
 
-#include <ESP8266SSDP.h>
 #include <ESP8266WebServer.h>
-#include <ESP8266SSDP.h>
 #include <ArduinoJson.h>
 
 #include "lc_gpio.h"
 #include "lc_templates.h"
 #include "lc_settings.h"
-
-#define SSDP_URL String("/")
-#define SSDP_SCHEMA_URL "description.xml"
-#define SSDP_SERIAL_NUMBER ESP.getChipId()
-#define SSDP_MODEL_NAME "RGB"
-#define SSDP_MODEL_NUMBER "01"
-#define SSDP_MANUFACTURER "PiNet"
 
 ESP8266WebServer server(80);
 
@@ -159,16 +150,6 @@ void InitWebserver()
     SSDP.schema(server.client());
   });
   server.begin();
-
-  SSDP.setSchemaURL(SSDP_URL + SSDP_SCHEMA_URL);
-  SSDP.setHTTPPort(conf.http_port);
-  SSDP.setName(conf.friendly_name);
-  SSDP.setSerialNumber(SSDP_SERIAL_NUMBER);
-  SSDP.setURL(SSDP_URL);
-  SSDP.setModelName(SSDP_MODEL_NAME);
-  SSDP.setModelNumber(SSDP_MODEL_NUMBER);
-  SSDP.setManufacturer(SSDP_MANUFACTURER);
-  SSDP.begin();
   
   Program_Clear();
 }
