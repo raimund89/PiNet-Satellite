@@ -66,7 +66,7 @@ void InitWebserver()
     
     str += InfoHeader("SSDP Discovery");
     str += InfoRow("Schema URL", SSDP_URL + SSDP_SCHEMA_URL);
-    str += InfoRow("Port", String(conf.port));
+    str += InfoRow("Port", String(conf.http_port));
     str += InfoRow("Name", conf.friendly_name);
     str += InfoRow("Serial Number", String(SSDP_SERIAL_NUMBER));
     str += InfoRow("Manufacturer", SSDP_MANUFACTURER);
@@ -161,7 +161,7 @@ void InitWebserver()
   server.begin();
 
   SSDP.setSchemaURL(SSDP_URL + SSDP_SCHEMA_URL);
-  SSDP.setHTTPPort(conf.port);
+  SSDP.setHTTPPort(conf.http_port);
   SSDP.setName(conf.friendly_name);
   SSDP.setSerialNumber(SSDP_SERIAL_NUMBER);
   SSDP.setURL(SSDP_URL);
