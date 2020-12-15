@@ -54,6 +54,7 @@ void InitWebserver()
     str += InfoRow("Gateway", WiFi.gatewayIP().toString());
     str += InfoRow("DNS Server", WiFi.dnsIP().toString());
     str += InfoRow("Subnet Mask", WiFi.subnetMask().toString());
+    str += InfoRow("Current Time", String(timeClient.getHours()) + ":" + String(timeClient.getMinutes()) + ":" + String(timeClient.getSeconds()));
     
     str += InfoHeader("SSDP Discovery");
     str += InfoRow("Schema URL", SSDP_URL + SSDP_SCHEMA_URL);

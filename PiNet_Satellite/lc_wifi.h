@@ -3,9 +3,14 @@
 
 #include <WiFiManager.h>
 #include <ESP8266SSDP.h>
+#include <NTPClient.h>
+#include <WiFiUdp.h>
 #include "lc_settings.h"
 
 WiFiManager wifiManager;
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP, "pool.ntp.org");
+long lastNTPUpdate = 0;
 
 #define SSDP_URL String("/")
 #define SSDP_SCHEMA_URL "description.xml"
@@ -33,6 +38,16 @@ void InitSSDP() {
   SSDP.setManufacturer(SSDP_MANUFACTURER);
   SSDP.begin();
 }
+
+void InitNTP() {
+  timeClient.begin();
+}
+
+void HandleNTP() {
+  if(millis() - lastNTPUpdate > 300000) {
+    timeClient.update();
+    lastNTPUpdate = millis();
+  }
 }
 
 #endif

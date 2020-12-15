@@ -11,6 +11,7 @@ void setup() {
   delay(2000);
   Program_CycleColors(0.1);
   InitWifi();
+  InitNTP();
   InitOTA();
   delay(1000);
   InitWebserver();
@@ -18,6 +19,7 @@ void setup() {
 }
 
 void loop() {
+  HandleNTP();
   HandleOTA();
   HandleWebserver();
 }
