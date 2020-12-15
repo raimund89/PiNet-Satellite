@@ -12,6 +12,7 @@ The current software is really just an early setup to make the device work. A lo
 - [x] SSDP multicast response for device discovery
 - [x] Webserver for interaction
 - [x] ArduinoOTA to allow flashing over wifi
+- [ ] NTP sync with timezone detection
 - [ ] Configuration as different device presets: switch, light, rgb (3x led), programmable led-strip, Sonoff S20/S26, etc.
 - [ ] Pin naming
 - [ ] Pin modes (analog, digital)
