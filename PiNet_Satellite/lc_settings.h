@@ -79,7 +79,7 @@ bool saveSettings() {
   doc["general"]["timezone"] = conf.timezone;
   doc["general"]["dst"] = conf.dst;
 
-  for(int i=0; i<sizeof(conf.pins)/sizeof(Pin); i++) {
+  for(unsigned int i=0; i<sizeof(conf.pins)/sizeof(Pin); i++) {
     if(conf.pins[i].configured){
       char num[5];
       itoa(i, num, 10);
@@ -114,7 +114,7 @@ bool resetSettings() {
   conf.timezone = DEFAULT_TIMEZONE;
   conf.dst = DEFAULT_DST;
 
-  for(int i=0; i<sizeof(conf.pins)/sizeof(Pin); i++) {
+  for(unsigned int i=0; i<sizeof(conf.pins)/sizeof(Pin); i++) {
     conf.pins[i].configured = false;
   }
 
