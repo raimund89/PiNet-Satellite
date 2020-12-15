@@ -12,7 +12,6 @@
 #define DEFAULT_DEVICE_TYPE 0
 #define DEFAULT_HTTP_PORT 80
 #define DEFAULT_TIMEZONE 30
-#define DEFAULT_DST true
 
 /*
  * Example settings file
@@ -55,7 +54,6 @@ struct Config {
   int http_port;
 
   short timezone;
-  bool dst;
 
   Pin pins[17];
 };
@@ -93,7 +91,6 @@ bool saveSettings() {
   doc["general"]["ap_name"] = conf.ap_name;
   doc["general"]["http_port"] = conf.http_port;
   doc["general"]["timezone"] = conf.timezone;
-  doc["general"]["dst"] = conf.dst;
 
   for(unsigned int i=0; i<sizeof(conf.pins)/sizeof(Pin); i++) {
     if(conf.pins[i].configured){
@@ -128,7 +125,6 @@ bool defaultSettings() {
   strlcpy(conf.ap_name, DEFAULT_AP_NAME, sizeof(DEFAULT_AP_NAME));
   conf.http_port = DEFAULT_HTTP_PORT;
   conf.timezone = DEFAULT_TIMEZONE;
-  conf.dst = DEFAULT_DST;
 
   for(unsigned int i=0; i<sizeof(conf.pins)/sizeof(Pin); i++) {
     conf.pins[i].configured = false;
@@ -158,7 +154,6 @@ bool loadSettings() {
     strlcpy(conf.ap_name, doc["general"]["ap_name"] | DEFAULT_AP_NAME, sizeof(conf.ap_name));
     conf.http_port = doc["general"]["http_port"] | DEFAULT_HTTP_PORT;
     conf.timezone = doc["general"]["timezone"] | DEFAULT_TIMEZONE;
-    conf.dst = doc["general"]["dst"] | true;
 
     for(JsonPair kv: doc["pins"].as<JsonObject>()) {
       int pin = atoi(kv.key().c_str());
