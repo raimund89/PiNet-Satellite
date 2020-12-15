@@ -97,12 +97,16 @@ void InitWebserver()
       str += ButtonMatter("/config?o=ssdp", "SSDP");
       str += ButtonMatter("/config?o=dev", "Device");
       str += ButtonMatter("/config?o=timers", "Timers");
+      str += ButtonMatter("/config.json", "Config File");
       str += ButtonMatter("/", "Back");
     }
 
     str += BackMatter();
 
     server.send(200, "text/html", str);
+  });
+  server.on("/config.json", []() {
+    server.send(200, "text/json", getSettings());
   });
   server.on("/restart", []() {
     server.sendHeader("Location", String("/"), true);

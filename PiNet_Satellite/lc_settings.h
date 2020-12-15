@@ -62,6 +62,22 @@ struct Config {
 
 Config conf;
 
+String getSettings() {
+  String ret;
+  File file = LittleFS.open(SETTINGS_FILE, "r");
+  
+  if(!file) {
+    String ret = "File not found";
+  }
+
+  while(file.available()) {
+    ret += file.read();
+  }
+  
+  file.close();
+  return ret;
+}
+
 bool saveSettings() {
   LittleFS.remove(SETTINGS_FILE);
 
@@ -101,9 +117,9 @@ bool saveSettings() {
   return true;
 }
 
-bool resetSettings() {
+bool defaultSettings() {
   // The settings file doesn't exist, so assume this is the first time
-  // this device is booting to PiNet. Format the SPIFFS and save the 
+  // this device is booting to PiNet. Format the LittleFS and save the 
   // default settings to file.
   LittleFS.format();
 
@@ -160,7 +176,7 @@ bool loadSettings() {
     return true;
   }
   else {
-    return resetSettings();
+    return defaultSettings();
   }
 }
 
