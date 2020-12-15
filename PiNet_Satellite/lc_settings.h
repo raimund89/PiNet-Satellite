@@ -52,7 +52,7 @@ struct Config {
   char ap_name[64];
   int http_port;
 
-  Pin pins[18];
+  Pin pins[17];
 };
 
 Config conf;
