@@ -97,6 +97,29 @@ bool saveSettings() {
 
   // Close the file
   file.close();
+
+  return true;
+}
+
+bool resetSettings() {
+  // The settings file doesn't exist, so assume this is the first time
+  // this device is booting to PiNet. Format the SPIFFS and save the 
+  // default settings to file.
+  SPIFFS.format();
+
+  // Set default setting values
+  strlcpy(conf.friendly_name, DEFAULT_FRIENDLY_NAME, sizeof(DEFAULT_FRIENDLY_NAME));
+  strlcpy(conf.ap_name, DEFAULT_AP_NAME, sizeof(DEFAULT_AP_NAME));
+  conf.http_port = DEFAULT_HTTP_PORT;
+  conf.timezone = DEFAULT_TIMEZONE;
+  conf.dst = DEFAULT_DST;
+
+  for(int i=0; i<sizeof(conf.pins)/sizeof(Pin); i++) {
+    conf.pins[i].configured = false;
+  }
+
+  // Now save these as the first template
+  return saveSettings();
 }
 
 bool loadSettings() {
@@ -133,26 +156,11 @@ bool loadSettings() {
 
     // Close the file.
     file.close();
+    
+    return true;
   }
   else {
-    // The settings file doesn't exist, so assume this is the first time
-    // this device is booting to PiNet. Format the SPIFFS and save the 
-    // default settings to file.
-    SPIFFS.format();
-
-    // Set default setting values
-    strlcpy(conf.friendly_name, DEFAULT_FRIENDLY_NAME, sizeof(DEFAULT_FRIENDLY_NAME));
-    strlcpy(conf.ap_name, DEFAULT_AP_NAME, sizeof(DEFAULT_AP_NAME));
-    conf.http_port = DEFAULT_HTTP_PORT;
-    conf.timezone = DEFAULT_TIMEZONE;
-    conf.dst = DEFAULT_DST;
-
-    for(int i=0; i<sizeof(conf.pins)/sizeof(Pin); i++) {
-      conf.pins[i].configured = false;
-    }
-
-    // Now save these as the first template
-    return saveSettings();
+    return resetSettings();
   }
 }
 
