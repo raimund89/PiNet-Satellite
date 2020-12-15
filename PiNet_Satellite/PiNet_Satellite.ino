@@ -5,9 +5,9 @@
 #include "lc_webserver.h"
 
 void setup() {
+  InitSettings();
   InitGPIO();
   Program_CycleColors(0.2);
-  InitSettings();
   delay(2000);
   Program_CycleColors(0.1);
   InitWifi();
