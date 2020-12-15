@@ -71,7 +71,7 @@ String getSettings() {
   }
 
   while(file.available()) {
-    ret += file.read();
+    ret += (char)file.read();
   }
   
   file.close();
