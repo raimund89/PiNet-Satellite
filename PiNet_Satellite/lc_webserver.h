@@ -89,6 +89,11 @@ void InitWebserver()
       else if(page == "timers") {
         str += "Timer Settings";
       }
+      else if(page == "reset") {
+        defaultSettings();
+        server.sendHeader("Location", String("/config"), true);
+        server.send(302, "text/plain", "");
+      }
       
       str += ButtonMatter("/config", "Back");
     }
@@ -98,6 +103,7 @@ void InitWebserver()
       str += ButtonMatter("/config?o=dev", "Device");
       str += ButtonMatter("/config?o=timers", "Timers");
       str += ButtonMatter("/config.json", "Config File");
+      str += ButtonMatter("/config?o=reset", "Reset Config");
       str += ButtonMatter("/", "Back");
     }
 
