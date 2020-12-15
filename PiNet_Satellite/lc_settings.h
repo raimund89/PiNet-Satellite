@@ -5,7 +5,7 @@
 #include <ArduinoJson.h>
 
 #define SETTINGS_FILE "/settings.json"
-#define SETTINGS_RAM 1024
+#define SETTINGS_RAM 1300
 
 #define DEFAULT_FRIENDLY_NAME "Christmas Fractal Lamp"
 #define DEFAULT_AP_NAME "PiNet Satellite AP"
