@@ -32,3 +32,9 @@ The firmware makes use of WiFiManager to connect and store wifi information. The
 When wifi is configured correctly, the device will go through a number of steps. It loads the settings from the SPIFFS (friendly name, pin configuration, etc.) and configures the GPIO accordingly. Then it will connect to the wifi network and initialize the OTA functionality. The current time is synchronized with an NTP server (for timer functionality) and the webserver is started. Also, an SSDP discovery protocol is started so the device can be found by PiNet Ground Control and PiNet Major Tom.
 
 Every available pin of the ESP8266 can be configured. Which pins are actually available is not checked by the firmware! So you will have to check this yourself. You can configure every pin either as a digital or analog output with a corresponding value, or as a digital input. Also, you can set whether it is currently enabled or not (to temporarily enable or disable pins for example without losing the configuration). The pin value can be set directly using either the web interface or the API (used by Ground Control and Major Tom), or it can follow the output of another pin. The last function is useful when a status LED needs to be changed according to another pin, such as for the Sonoff S20/S26, or when the device has a physical switch to turn a pin on/off. 
+
+# Acknowledgements
+Many people should be thanked, including the entire ESP8266 and Arduino community. This list is just the list of authors of the APIs and libraries used in this project:
+- tzapu for the (https://github.com/tzapu/WiFiManager)[WiFiManager] library
+- bblanchon for the (https://github.com/bblanchon/ArduinoJson)[ArduinoJson] library
+- ip-api.com for their open API to receive timezone information
