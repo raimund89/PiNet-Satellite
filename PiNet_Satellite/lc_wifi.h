@@ -8,8 +8,9 @@
 #include "lc_settings.h"
 
 WiFiManager wifiManager;
+
 WiFiUDP ntpUDP;
-NTPClient timeClient(ntpUDP, "pool.ntp.org");
+NTPClient timeClient(ntpUDP, "pool.ntp.org", 0, 3600000);
 long lastNTPUpdate = 0;
 
 #define SSDP_URL String("/")
@@ -44,10 +45,10 @@ void InitNTP() {
 }
 
 void HandleNTP() {
-  if(millis() - lastNTPUpdate > 300000) {
+  /*if(millis() - lastNTPUpdate > 300000) {
     timeClient.update();
     lastNTPUpdate = millis();
-  }
+  }*/
 }
 
 #endif
