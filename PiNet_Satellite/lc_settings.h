@@ -1,7 +1,7 @@
 #ifndef LC_SETTINGS
 #define LC_SETTINGS
 
-#include <FS.h>
+#include <LittleFS.h>
 #include <ArduinoJson.h>
 
 #define SETTINGS_FILE "/settings.json"
@@ -63,9 +63,9 @@ struct Config {
 Config conf;
 
 bool saveSettings() {
-  SPIFFS.remove(SETTINGS_FILE);
+  LittleFS.remove(SETTINGS_FILE);
 
-  File file = SPIFFS.open(SETTINGS_FILE, "w");
+  File file = LittleFS.open(SETTINGS_FILE, "w");
   if(!file) {
     return false;
   }
@@ -105,7 +105,7 @@ bool resetSettings() {
   // The settings file doesn't exist, so assume this is the first time
   // this device is booting to PiNet. Format the SPIFFS and save the 
   // default settings to file.
-  SPIFFS.format();
+  LittleFS.format();
 
   // Set default setting values
   strlcpy(conf.friendly_name, DEFAULT_FRIENDLY_NAME, sizeof(DEFAULT_FRIENDLY_NAME));
@@ -123,8 +123,8 @@ bool resetSettings() {
 }
 
 bool loadSettings() {
-  if(SPIFFS.exists(SETTINGS_FILE)) {
-    File file = SPIFFS.open(SETTINGS_FILE, "r");
+  if(LittleFS.exists(SETTINGS_FILE)) {
+    File file = LittleFS.open(SETTINGS_FILE, "r");
     if(!file) {
       // An error occured.. Not sure what to do with that..
       return false;
@@ -165,7 +165,7 @@ bool loadSettings() {
 }
 
 void InitSettings() {
-  SPIFFS.begin();
+  LittleFS.begin();
 
   loadSettings();
 }
