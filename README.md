@@ -35,7 +35,6 @@ Every available pin of the ESP8266 can be configured. Which pins are actually av
 
 # Acknowledgements
 Many people should be thanked, including the entire ESP8266 and Arduino community. This list is just the list of authors of the APIs and libraries used in this project:
-- tzapu for the (https://github.com/tzapu/WiFiManager)[WiFiManager] library
-- bblanchon for the (https://github.com/bblanchon/ArduinoJson)[ArduinoJson] library
-- nayarsystems for the (https://github.com/nayarsystems/posix_tz_db)[timezone data file]
+- tzapu for the [WiFiManager](https://github.com/tzapu/WiFiManager) library
+- bblanchon for the [ArduinoJson](https://github.com/bblanchon/ArduinoJson) library
 - ip-api.com for their open API to receive timezone information
