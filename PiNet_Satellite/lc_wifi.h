@@ -4,6 +4,7 @@
 #include <WiFiManager.h>
 #include <ESP8266SSDP.h>
 #include <ESP8266HTTPClient.h>
+#include <coredecls.h>
 #include <time.h>
 #include "lc_settings.h"
 
@@ -36,7 +37,20 @@ void InitSSDP() {
   SSDP.begin();
 }
 
+String getTimeString() {
+  time_t now = time(nullptr);
+  tm* local = localtime(&now);
+  return String(local->tm_hour) + ":" + String(local->tm_min) + ":" + String(local->tm_sec);
+}
+
+void time_is_set() {
+  last_time_update = getTimeString();
+}
+
 void InitNTP() {
+  // Set callback for whenever the time is changed
+  settimeofday_cb(time_is_set);
+  
   // We're starting up, so check the time offset.
   HTTPClient http;
   http.useHTTP10(true);
@@ -54,16 +68,12 @@ void InitNTP() {
 }
 
 void HandleNTP() {
+  // TODO: If current time is 2:05am, update the clock
+  // Or maybe even more frequently
   /*if(millis() - lastNTPUpdate > 300000) {
     timeClient.update();
     lastNTPUpdate = millis();
   }*/
-}
-
-String getTimeString() {
-  time_t now = time(nullptr);
-  tm* local = localtime(&now);
-  return String(local->tm_hour) + ":" + String(local->tm_min) + ":" + String(local->tm_sec);
 }
 
 #endif

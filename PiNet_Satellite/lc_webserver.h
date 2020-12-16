@@ -56,6 +56,7 @@ void InitWebserver()
     str += InfoRow("Subnet Mask", WiFi.subnetMask().toString());
     str += InfoRow("Current Time", getTimeString());
     str += InfoRow("Time Offset", String(conf.time_offset));
+    str += InfoRow("Last Sync", last_time_update);
     
     str += InfoHeader("SSDP Discovery");
     str += InfoRow("Schema URL", SSDP_URL + SSDP_SCHEMA_URL);

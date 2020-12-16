@@ -58,6 +58,8 @@ struct Config {
   Pin pins[17];
 };
 
+String last_time_update;
+
 Config conf;
 
 String getSettings() {
