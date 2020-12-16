@@ -84,7 +84,7 @@ bool saveSettings() {
     return false;
   }
 
-  StaticJsonDocument<SETTINGS_RAM> doc;
+  DynamicJsonDocument doc(SETTINGS_RAM);
 
   // Parse settings
   doc["general"]["friendly_name"] = conf.friendly_name;
@@ -142,7 +142,7 @@ bool loadSettings() {
       return false;
     }
     
-    StaticJsonDocument<SETTINGS_RAM> doc;
+    DynamicJsonDocument doc(SETTINGS_RAM);
     DeserializationError error = deserializeJson(doc, file);
     if(error) {
       // An error occured
