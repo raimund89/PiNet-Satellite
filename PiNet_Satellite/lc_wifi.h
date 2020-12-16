@@ -3,15 +3,11 @@
 
 #include <WiFiManager.h>
 #include <ESP8266SSDP.h>
-#include <NTPClient.h>
-#include <WiFiUdp.h>
+#include <ESP8266HTTPClient.h>
+#include <time.h>
 #include "lc_settings.h"
 
 WiFiManager wifiManager;
-
-WiFiUDP ntpUDP;
-NTPClient timeClient(ntpUDP, "pool.ntp.org", 0, 3600000);
-long lastNTPUpdate = 0;
 
 #define SSDP_URL String("/")
 #define SSDP_SCHEMA_URL "description.xml"
@@ -41,7 +37,20 @@ void InitSSDP() {
 }
 
 void InitNTP() {
-  timeClient.begin();
+  // We're starting up, so check the time offset.
+  HTTPClient http;
+  http.useHTTP10(true);
+  http.begin("http://ip-api.com/json/?fields=33571266");
+  http.GET();
+
+  DynamicJsonDocument doc(2048);
+  deserializeJson(doc, http.getStream());
+  
+  conf.time_offset = doc["offset"] | DEFAULT_TIME_OFFSET;
+  configTime(conf.time_offset, 0, "pool.ntp.org");
+
+  http.end();
+  saveSettings();
 }
 
 void HandleNTP() {
@@ -49,6 +58,12 @@ void HandleNTP() {
     timeClient.update();
     lastNTPUpdate = millis();
   }*/
+}
+
+String getTimeString() {
+  time_t now = time(nullptr);
+  tm* local = localtime(&now);
+  return String(local->tm_hour) + ":" + String(local->tm_min) + ":" + String(local->tm_sec);
 }
 
 #endif

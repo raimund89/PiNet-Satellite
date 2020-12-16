@@ -11,7 +11,7 @@
 #define DEFAULT_AP_NAME "PiNet Satellite AP"
 #define DEFAULT_DEVICE_TYPE 0
 #define DEFAULT_HTTP_PORT 80
-#define DEFAULT_TIMEZONE 30
+#define DEFAULT_TIME_OFFSET 0
 
 /*
  * Example settings file
@@ -53,7 +53,7 @@ struct Config {
   char ap_name[64];
   int http_port;
 
-  short timezone;
+  long time_offset;
 
   Pin pins[17];
 };
@@ -90,7 +90,7 @@ bool saveSettings() {
   doc["general"]["friendly_name"] = conf.friendly_name;
   doc["general"]["ap_name"] = conf.ap_name;
   doc["general"]["http_port"] = conf.http_port;
-  doc["general"]["timezone"] = conf.timezone;
+  doc["general"]["time_offset"] = conf.time_offset;
 
   for(unsigned int i=0; i<sizeof(conf.pins)/sizeof(Pin); i++) {
     if(conf.pins[i].configured){
@@ -124,7 +124,7 @@ bool defaultSettings() {
   strlcpy(conf.friendly_name, DEFAULT_FRIENDLY_NAME, sizeof(DEFAULT_FRIENDLY_NAME));
   strlcpy(conf.ap_name, DEFAULT_AP_NAME, sizeof(DEFAULT_AP_NAME));
   conf.http_port = DEFAULT_HTTP_PORT;
-  conf.timezone = DEFAULT_TIMEZONE;
+  conf.time_offset = DEFAULT_TIME_OFFSET;
 
   for(unsigned int i=0; i<sizeof(conf.pins)/sizeof(Pin); i++) {
     conf.pins[i].configured = false;
@@ -153,7 +153,7 @@ bool loadSettings() {
     strlcpy(conf.friendly_name, doc["general"]["friendly_name"] | DEFAULT_FRIENDLY_NAME, sizeof(conf.friendly_name));
     strlcpy(conf.ap_name, doc["general"]["ap_name"] | DEFAULT_AP_NAME, sizeof(conf.ap_name));
     conf.http_port = doc["general"]["http_port"] | DEFAULT_HTTP_PORT;
-    conf.timezone = doc["general"]["timezone"] | DEFAULT_TIMEZONE;
+    conf.time_offset = doc["general"]["time_offset"] | DEFAULT_TIME_OFFSET;
 
     for(JsonPair kv: doc["pins"].as<JsonObject>()) {
       int pin = atoi(kv.key().c_str());
