@@ -52,9 +52,10 @@ void InitNTP() {
   settimeofday_cb(time_is_set);
   
   // We're starting up, so check the time offset.
+  WiFiClient client;
   HTTPClient http;
   http.useHTTP10(true);
-  http.begin("http://ip-api.com/json/?fields=33571266");
+  http.begin(client, "http://ip-api.com/json/?fields=33571266");
   http.GET();
 
   DynamicJsonDocument doc(2048);

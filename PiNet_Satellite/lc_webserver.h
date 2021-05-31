@@ -13,7 +13,7 @@ ESP8266WebServer server(80);
 void InitWebserver()
 {
   server.on("/", []() {
-    String str = FrontMatter() + HeadMatter();
+    String str = FrontMatter() + HeadMatter() + PickerMatter();
     str += ButtonMatter("/info", "Information");
     str += ButtonMatter("/config", "Configuration");
     str += ButtonMatter("/upgrade", "Upgrade");

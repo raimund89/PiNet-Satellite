@@ -6,6 +6,7 @@
 String FrontMatter() {
   return "<!DOCTYPE html><html>"
          "<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
+         "<script src='https://cdn.jsdelivr.net/npm/@jaames/iro@5'></script>"
          "<link rel=\"icon\" href=\"data:,\">"
          "<style>"
          "html { background-color:#252525; color:#eaeaea; font-family:Helvetica; margin:0px auto; text-align:center;}"
@@ -38,6 +39,13 @@ String BackMatter() {
          "<hr/>"
          "<div style='width:100%; font-size:10pt; text-align:right;'>PiNet 0.1 by raimund89</div>"
          "</div></body></html>";
+}
+
+String PickerMatter() {
+  return "<div id='picker' style='width:300px;margin:0 auto 50px auto;'></div></p>"
+         "<script>function doRequest(e){var o='/cm?cmnd=Color';null!=e&&(o+='&c='+e);var r=new XMLHttpRequest;r.onreadystatechange=function(){4==r.readyState&&200==r.status&&(colorPicker.color.hexString=JSON.parse(r.responseText).Color)},r.open('GET',o),r.send(null)}</script>"
+         "<script>var colorPicker = new iro.ColorPicker('#picker');colorPicker.on('input:end', function(color){console.log(color.hexString);doRequest(color.hexString.substring(1));});</script>"
+         "<script>setInterval(doRequest,1000);</script>";
 }
 
 #endif
