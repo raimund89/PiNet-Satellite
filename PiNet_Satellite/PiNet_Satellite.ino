@@ -15,11 +15,16 @@ void setup() {
   InitOTA();
   delay(1000);
   InitWebserver();
+  InitWebsocket();
   InitSSDP();
 }
 
 void loop() {
-  HandleNTP();
   HandleOTA();
-  HandleWebserver();
+
+  if(!handling_ota){
+    HandleNTP();
+    HandleWebserver();
+    HandleWebsocket();
+  }
 }

@@ -7,12 +7,15 @@
 #include <ArduinoOTA.h>
 #include "lc_settings.h"
 
+bool handling_ota = false;
+
 void InitOTA()
 {
   ArduinoOTA.setPort(8266);
   ArduinoOTA.setHostname(conf.friendly_name);
 
   ArduinoOTA.onStart([]() {
+    handling_ota = true;
   });
   ArduinoOTA.onEnd([]() {
   });
