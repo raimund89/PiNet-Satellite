@@ -43,10 +43,24 @@ String BackMatter() {
 
 String PickerMatter() {
   return "<div id='colorpicker' style='width:300px;margin:0 auto 50px auto;'></div><div id='whitepicker' style='width:300px;margin:0 auto 50px auto;'></div></p>"
-         "<script>function doRequest(color){var a = '/cm?cmnd=Color';if(color){a += '&c=' + colorPicker.color.hexString.substring(1) + whitePicker.color.hexString.substring(1,3);}var x = new XMLHttpRequest();x.onreadystatechange=function(){if(x.readyState==4&&x.status==200){var obj = JSON.parse(x.responseText);colorPicker.color.hexString=obj.Color.substring(0,7);whitePicker.color.hexString='#' + obj.Color.substring(7).repeat(3);}};x.open('GET', a);x.send(null);}</script>"
-         "<script>var colorPicker = new iro.ColorPicker('#colorpicker');colorPicker.on('input:end', function(color){console.log(color.hexString);doRequest(true);});</script>"
-         "<script>var whitePicker = new iro.ColorPicker('#whitepicker',{layout:[{component:iro.ui.Slider,options:{sliderType:'value'}}]});whitePicker.on('input:end', function(color){console.log(color.hexString);doRequest(true);});</script>"
-         "<script>setInterval(doRequest,1000);</script>";
+         "<script>"
+         "var connection=new WebSocket('ws://' + location.hostname + ':81/');"
+         "connection.onopen=function(){connection.send('C');};"
+         "connection.onmessage=function(e){"
+         "    colorPicker.color.hexString=e.data.substring(0,7);"
+         "    whitePicker.color.hexString='#'+e.data.substring(7).repeat(3);"
+         "};"
+         "var n = Date.now();"
+         "function sendcolor(){"
+         "    if(Date.now()-n<125){return;}"
+         "    n=Date.now();"
+         "    connection.send('#'+colorPicker.color.hexString.substring(1)+whitePicker.color.hexString.substring(1,3));"
+         "}"
+         "var colorPicker = new iro.ColorPicker('#colorpicker');"
+         "colorPicker.on('input:change', function(color){console.log(color.hexString);sendcolor();});"
+         "var whitePicker = new iro.ColorPicker('#whitepicker',{layout:[{component:iro.ui.Slider,options:{sliderType:'value'}}]});"
+         "whitePicker.on('input:change', function(color){console.log(color.hexString);sendcolor();});"
+         "</script>";
 }
 
 #endif

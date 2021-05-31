@@ -2,6 +2,7 @@
 #define LC_WEBSERVER
 
 #include <ESP8266WebServer.h>
+#include <WebSocketsServer.h>
 #include <ArduinoJson.h>
 
 #include "lc_gpio.h"
@@ -9,6 +10,39 @@
 #include "lc_settings.h"
 
 ESP8266WebServer server(80);
+WebSocketsServer websocket(81);
+
+void socket_event(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght){
+  switch (type) 
+  {
+    case WStype_TEXT:                     // if new text data is received
+      if (payload[0] == '#') {
+        // The user sets a color
+        String color = (char*)payload;
+        SetColor(Color(strtoul(color.substring(1,3).c_str(), NULL, 16), strtoul(color.substring(3,5).c_str(), NULL, 16), strtoul(color.substring(5,7).c_str(), NULL, 16), strtoul(color.substring(7,9).c_str(), NULL, 16)), true);
+        
+        Color c = GetColor();
+        char cs[9];
+        sprintf(cs, "#%02X%02X%02X%02X", c.r, c.g, c.b, c.w);
+        websocket.broadcastTXT(cs);
+      } else if (payload[0] == 'C') {
+        // The user asks for the current color
+        Color c = GetColor();
+        char cs[9];
+        sprintf(cs, "#%02X%02X%02X%02X", c.r, c.g, c.b, c.w);
+        websocket.sendTXT(num, cs);
+      } else if (payload[0] == 'I') {
+        // The user asks for information
+      }
+      break;
+  }
+}
+
+void InitWebsocket()
+{
+  websocket.begin();
+  websocket.onEvent(socket_event);
+}
 
 void InitWebserver()
 {
@@ -132,22 +166,6 @@ void InitWebserver()
         serializeJson(doc, output);
         server.send(200, "text/json", output);
       }
-      else if(cmnd == "Color") {
-        if(server.hasArg("c")){
-          String color = server.arg("c");
-          SetColor(Color(strtoul(color.substring(0,2).c_str(), NULL, 16), strtoul(color.substring(2,4).c_str(), NULL, 16), strtoul(color.substring(4,6).c_str(), NULL, 16), strtoul(color.substring(6,8).c_str(), NULL, 16)), true);
-        }
-  
-        // They want to know the current color.
-        DynamicJsonDocument doc(50);
-        Color c = GetColor();
-        char cs[6];
-        sprintf(cs, "#%02X%02X%02X%02X", c.r, c.g, c.b, c.w);
-        doc["Color"] = cs;
-        String output;
-        serializeJson(doc, output);
-        server.send(200, "text/json", output);
-      }
       else if(cmnd == "Program") {
         if(server.hasArg("p")) {
           // Set the program and settings
@@ -170,6 +188,11 @@ void InitWebserver()
 void HandleWebserver()
 {
   server.handleClient();
+}
+
+void HandleWebsocket()
+{
+  websocket.loop();
 }
 
 #endif

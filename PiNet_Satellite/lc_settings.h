@@ -13,6 +13,9 @@
 #define DEFAULT_HTTP_PORT 80
 #define DEFAULT_TIME_OFFSET 0
 
+#define MANUFACTURER "Espressif"
+#define DEVICE_TYPE "RGBW"
+
 /*
  * Example settings file
  * 
