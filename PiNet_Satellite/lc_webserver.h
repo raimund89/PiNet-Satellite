@@ -135,14 +135,14 @@ void InitWebserver()
       else if(cmnd == "Color") {
         if(server.hasArg("c")){
           String color = server.arg("c");
-          SetColor(Color(strtoul(color.substring(0,2).c_str(), NULL, 16), strtoul(color.substring(2,4).c_str(), NULL, 16), strtoul(color.substring(4,6).c_str(), NULL, 16)), true);
+          SetColor(Color(strtoul(color.substring(0,2).c_str(), NULL, 16), strtoul(color.substring(2,4).c_str(), NULL, 16), strtoul(color.substring(4,6).c_str(), NULL, 16), strtoul(color.substring(6,8).c_str(), NULL, 16)), true);
         }
   
         // They want to know the current color.
         DynamicJsonDocument doc(50);
         Color c = GetColor();
         char cs[6];
-        sprintf(cs, "#%02X%02X%02X", c.r, c.g, c.b);
+        sprintf(cs, "#%02X%02X%02X%02X", c.r, c.g, c.b, c.w);
         doc["Color"] = cs;
         String output;
         serializeJson(doc, output);

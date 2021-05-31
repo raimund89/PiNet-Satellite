@@ -7,26 +7,33 @@ Ticker program_ticker;
 
 class Color {
   public:
-    int r, g, b;
+    int r, g, b, w;
 
-    Color(int red, int green, int blue) {
+    Color(int red, int green, int blue, int white) {
       r = red;
       g = green;
       b = blue;
+      w = white;
     }
 };
 
 // Some default colors
-#define COLOR_BLACK Color(0,0,0)
-#define COLOR_RED   Color(255,0,0)
-#define COLOR_GREEN Color(0,255,0)
-#define COLOR_BLUE  Color(0,0,255)
-#define COLOR_WHITE Color(255,255,255)
+#define COLOR_BLACK  Color(0,0,0,0)
+#define COLOR_RED    Color(255,0,0,0)
+#define COLOR_GREEN  Color(0,255,0,0)
+#define COLOR_BLUE   Color(0,0,255,0)
+#define COLOR_WHITE  Color(255,255,255,0)
+#define COLOR_WWHITE Color(0,0,0,255)
 
+// Pin definitions on an ESP01 type LED controller
+//#define PWM_GREEN 2
+//#define PWM_RED   0
+//#define PWM_BLUE  3
 // Pin definitions on an ESP8285 Magic Home type LED controller
-#define PWM_GREEN 2
-#define PWM_RED   0
-#define PWM_BLUE  3
+#define PWM_GREEN 5
+#define PWM_RED   12
+#define PWM_BLUE  13
+#define PWM_WHITE 15
 
 Color currentColor = COLOR_WHITE;
 Color programColor = COLOR_RED;
@@ -38,6 +45,7 @@ void InitGPIO()
   pinMode(PWM_GREEN, OUTPUT);
   pinMode(PWM_RED, OUTPUT);
   pinMode(PWM_BLUE, OUTPUT);
+  pinMode(PWM_WHITE, OUTPUT);
 
   // Avoid any *4 or /4, just change the analog range
   analogWriteRange(255);
@@ -50,6 +58,7 @@ void SetColor(Color c) {
   analogWrite(PWM_RED, c.r);
   analogWrite(PWM_GREEN, c.g);
   analogWrite(PWM_BLUE, c.b);
+  analogWrite(PWM_WHITE, c.w);
 }
 
 void SetColor(Color c, bool save) {

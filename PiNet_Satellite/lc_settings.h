@@ -7,7 +7,7 @@
 #define SETTINGS_FILE "/settings.json"
 #define SETTINGS_RAM 1300
 
-#define DEFAULT_FRIENDLY_NAME "Christmas Fractal Lamp"
+#define DEFAULT_FRIENDLY_NAME "Bedchamber Fancy Light"
 #define DEFAULT_AP_NAME "PiNet Satellite AP"
 #define DEFAULT_DEVICE_TYPE 0
 #define DEFAULT_HTTP_PORT 80

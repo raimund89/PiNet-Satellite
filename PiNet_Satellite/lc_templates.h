@@ -42,9 +42,10 @@ String BackMatter() {
 }
 
 String PickerMatter() {
-  return "<div id='picker' style='width:300px;margin:0 auto 50px auto;'></div></p>"
-         "<script>function doRequest(e){var o='/cm?cmnd=Color';null!=e&&(o+='&c='+e);var r=new XMLHttpRequest;r.onreadystatechange=function(){4==r.readyState&&200==r.status&&(colorPicker.color.hexString=JSON.parse(r.responseText).Color)},r.open('GET',o),r.send(null)}</script>"
-         "<script>var colorPicker = new iro.ColorPicker('#picker');colorPicker.on('input:end', function(color){console.log(color.hexString);doRequest(color.hexString.substring(1));});</script>"
+  return "<div id='colorpicker' style='width:300px;margin:0 auto 50px auto;'></div><div id='whitepicker' style='width:300px;margin:0 auto 50px auto;'></div></p>"
+         "<script>function doRequest(color){var a = '/cm?cmnd=Color';if(color){a += '&c=' + colorPicker.color.hexString.substring(1) + whitePicker.color.hexString.substring(1,3);}var x = new XMLHttpRequest();x.onreadystatechange=function(){if(x.readyState==4&&x.status==200){var obj = JSON.parse(x.responseText);colorPicker.color.hexString=obj.Color.substring(0,7);whitePicker.color.hexString='#' + obj.Color.substring(7).repeat(3);}};x.open('GET', a);x.send(null);}</script>"
+         "<script>var colorPicker = new iro.ColorPicker('#colorpicker');colorPicker.on('input:end', function(color){console.log(color.hexString);doRequest(true);});</script>"
+         "<script>var whitePicker = new iro.ColorPicker('#whitepicker',{layout:[{component:iro.ui.Slider,options:{sliderType:'value'}}]});whitePicker.on('input:end', function(color){console.log(color.hexString);doRequest(true);});</script>"
          "<script>setInterval(doRequest,1000);</script>";
 }
 
