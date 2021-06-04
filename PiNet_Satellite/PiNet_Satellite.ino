@@ -19,12 +19,18 @@ void setup() {
   InitSSDP();
 }
 
+
+// The total delay is 20ms, which means we can only do a max of 50 operations per second
 void loop() {
   HandleOTA();
+  delay(5);
 
   if(!handling_ota){
     HandleNTP();
+    delay(5);
     HandleWebserver();
+    delay(5);
     HandleWebsocket();
+    delay(5);
   }
 }

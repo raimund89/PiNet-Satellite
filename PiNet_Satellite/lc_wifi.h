@@ -25,6 +25,7 @@ void InitWifi()
   wifiManager.autoConnect(conf.ap_name);
 }
 
+// SSDP, or maybe switch to something like mDNS???
 void InitSSDP() {
   SSDP.setSchemaURL(SSDP_URL + SSDP_SCHEMA_URL);
   SSDP.setHTTPPort(conf.http_port);
